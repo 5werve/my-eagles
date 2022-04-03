@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_eagles/pages/schedule.dart';
-import 'package:my_eagles/pages/activities.dart';
-import 'package:my_eagles/pages/contact.dart';
-import 'package:my_eagles/pages/calendar.dart';
-import 'package:my_eagles/pages/home.dart';
+import 'package:my_eagles/pages/home/calendar.dart';
+import 'package:my_eagles/pages/home/schedule.dart';
+import 'package:my_eagles/pages/home/activities.dart';
+import 'package:my_eagles/pages/home/contact.dart';
+import 'package:my_eagles/pages/home/home.dart';
+
+import '../../services/auth.dart';
 
 class Navigation extends StatefulWidget {
   @override
@@ -28,11 +30,13 @@ class _NavigationState extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthService _auth = AuthService();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red[900],
         title: const Text(
-          'Centennial High School',
+          'Centennial HS',
           style: TextStyle(
             color: Colors.white,
             letterSpacing: 1.5,
@@ -44,6 +48,21 @@ class _NavigationState extends State<Navigation> {
           image: AssetImage('assets/centennial-logo.png'),
         ),
         automaticallyImplyLeading: false,
+        actions: <Widget>[
+          FlatButton.icon(
+            icon: const Icon(
+              Icons.person,
+              color: Colors.white,
+            ),
+            label: const Text('Logout',
+                style: TextStyle(
+                  color: Colors.white,
+                )),
+            onPressed: () async {
+              await _auth.signOut();
+            },
+          ),
+        ],
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(

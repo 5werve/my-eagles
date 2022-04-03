@@ -1,8 +1,8 @@
 class ScheduleObject {
   late String className;
   late String classTeacher;
-  late int classRoom;
-  late int classPeriod;
+  late String classRoom;
+  late String classPeriod;
 
   ScheduleObject(
       {required this.className,

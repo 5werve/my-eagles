@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "512414562394",
+    "project_id": "my-eagles",
+    "storage_bucket": "my-eagles.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512414562394:android:b6045f86d94b543b048063",
+        "android_client_info": {
+          "package_name": "com.example.my_eagles"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512414562394-p79qmp9f6tvus9il7ld49ngbdhuojrbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4dXtDdN67k00hzC3x081ZE_67Gms4oFI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512414562394-p79qmp9f6tvus9il7ld49ngbdhuojrbj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
