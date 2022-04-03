@@ -71,16 +71,16 @@ class _ScheduleChangeFormState extends State<ScheduleChangeForm> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            Text(
+            const Text(
               'Update your schedule',
               style: TextStyle(fontSize: 18.0),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             buildFormField(scheduleItems),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             RaisedButton(
               color: Colors.red[900],
-              child: Text(
+              child: const Text(
                 'Update',
                 style: TextStyle(color: Colors.white),
               ),
