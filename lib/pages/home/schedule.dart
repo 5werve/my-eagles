@@ -18,85 +18,91 @@ class _ScheduleState extends State<Schedule> {
   Widget build(BuildContext context) {
     final user = Provider.of<AppUser>(context);
 
-    return StreamBuilder<List<ScheduleObject>>(
-        stream: DatabaseService(uid: user.uid).userSchedule,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<ScheduleObject>? scheduleItems = snapshot.data;
-            return Scaffold(
-              body: ListView.builder(
-                itemCount: scheduleItems!.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 1.0, horizontal: 4.0),
-                    child: Card(
-                      color: Colors.grey[700],
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 2.0),
-                          Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(4.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              scheduleItems[index].className,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20.0),
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+      color: Colors.grey[900],
+      child: StreamBuilder<List<ScheduleObject>>(
+          stream: DatabaseService(uid: user.uid).userSchedule,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<ScheduleObject>? scheduleItems = snapshot.data;
+              return Scaffold(
+                body: ListView.builder(
+                  itemCount: scheduleItems!.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 1.0, horizontal: 4.0),
+                      child: Card(
+                        color: Colors.grey[700],
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 2.0),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(4.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                scheduleItems[index].className,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.0),
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 2.0),
-                          Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(4.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              "Period: " +
-                                  scheduleItems[index].classPeriod.toString(),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 17.0),
+                            const SizedBox(height: 2.0),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(4.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                "Period: " +
+                                    scheduleItems[index].classPeriod.toString(),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17.0),
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 2.0),
-                          Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(4.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              "Teacher: " + scheduleItems[index].classTeacher,
-                              style: const TextStyle(fontSize: 15.0),
+                            const SizedBox(height: 2.0),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(4.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                "Teacher: " + scheduleItems[index].classTeacher,
+                                style: const TextStyle(fontSize: 15.0),
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 2.0),
-                          Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(4.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              "Room: " +
-                                  scheduleItems[index].classRoom.toString(),
-                              style: const TextStyle(fontSize: 17.0),
+                            const SizedBox(height: 2.0),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(4.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                "Room: " +
+                                    scheduleItems[index].classRoom.toString(),
+                                style: const TextStyle(fontSize: 17.0),
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 2.0),
-                        ],
+                            const SizedBox(height: 2.0),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
-              backgroundColor: Colors.grey[900],
-              floatingActionButton: FloatingActionButton.extended(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ScheduleChange()));
-                },
-                icon: const Icon(Icons.settings_outlined),
-                label: const Text('Change'),
-              ),
-            );
-          } else {
-            return Loading();
-          }
-        });
+                    );
+                  },
+                ),
+                backgroundColor: Colors.grey[900],
+                floatingActionButton: FloatingActionButton.extended(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ScheduleChange()));
+                  },
+                  icon: const Icon(Icons.settings_outlined),
+                  label: const Text('Change'),
+                ),
+              );
+            } else {
+              return Loading();
+            }
+          }),
+    );
   }
 }

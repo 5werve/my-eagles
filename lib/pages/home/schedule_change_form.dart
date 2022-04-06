@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_eagles/models/app_user.dart';
 import 'package:my_eagles/models/schedule_object.dart';
+import 'package:my_eagles/services/auth.dart';
 import 'package:my_eagles/services/database.dart';
 import 'package:my_eagles/shared/constants.dart';
 import 'package:my_eagles/shared/loading.dart';
@@ -15,91 +16,146 @@ class ScheduleChangeForm extends StatefulWidget {
 
 class _ScheduleChangeFormState extends State<ScheduleChangeForm> {
   final _formKey = GlobalKey<FormState>();
+  bool initialized = true;
+
+  // form values
+  List<String> _currentClassNames = [];
+  List<String> _currentClassTeachers = [];
+  List<String> _currentClassRooms = [];
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AppUser>(context);
+    final AuthService _auth = AuthService();
     final scheduleItems = Provider.of<List<ScheduleObject>>(context);
 
-    // form values
-    List<String>? _currentClassNames;
-    List<String>? _currentClassTeachers;
-    List<String>? _currentClassRooms;
-
-    Widget buildFormField(List<ScheduleObject>? schedule) {
-      List<Widget> formSection = [];
+    if (scheduleItems.isNotEmpty && initialized) {
       for (int i = 0; i < 8; i++) {
-        formSection.add(Text(
-          'Period $i',
-          style: TextStyle(fontSize: 13.0),
-        ));
-        formSection.add(SizedBox(height: 8.0));
-        formSection.add(TextFormField(
-          initialValue: schedule![i].className,
-          decoration: textInputDecoration,
-          validator: (val) => val!.isEmpty ? 'Please enter a class name' : null,
-          onChanged: (val) => setState(() => _currentClassNames![i] = val),
-        ));
-        formSection.add(SizedBox(height: 5.0));
-        formSection.add(TextFormField(
-          initialValue: schedule[i].classTeacher,
-          decoration: textInputDecoration,
-          validator: (val) =>
-              val!.isEmpty ? 'Please enter a teacher name' : null,
-          onChanged: (val) => setState(() => _currentClassTeachers![i] = val),
-        ));
-        formSection.add(SizedBox(height: 5.0));
-        formSection.add(TextFormField(
-          initialValue: schedule[i].classRoom,
-          decoration: textInputDecoration,
-          validator: (val) => val!.isEmpty ? 'Please enter a class room' : null,
-          onChanged: (val) => setState(() => _currentClassRooms![i] = val),
-        ));
-        formSection.add(SizedBox(height: 25.0));
+        _currentClassNames.add(scheduleItems[i].className);
+        _currentClassTeachers.add(scheduleItems[i].classTeacher);
+        _currentClassRooms.add(scheduleItems[i].classRoom);
       }
-      return ListView(children: formSection);
+      initialized = false;
     }
 
-    for (int i = 0; i < 8; i++) {
-      _currentClassNames?.add(scheduleItems[i].className);
-      _currentClassTeachers?.add(scheduleItems[i].classTeacher);
-      _currentClassRooms?.add(scheduleItems[i].classRoom);
+    List<Widget> formBuilder(List<ScheduleObject> schedule) {
+      List<Widget> formWidgets = [];
+      formWidgets.add(const SizedBox(height: 15.0));
+      formWidgets.add(const Text(
+        'Update your schedule:',
+        style: TextStyle(
+            fontSize: 18.0, color: Colors.white, fontWeight: FontWeight.bold),
+      ));
+      formWidgets.add(const SizedBox(height: 20.0));
+      for (int i = 0; i < 8; i++) {
+        formWidgets.add(Text(
+          'Period $i',
+          style: TextStyle(fontSize: 13.0, color: Colors.white),
+        ));
+        formWidgets.add(const SizedBox(height: 15.0));
+        formWidgets.add(TextFormField(
+          initialValue: schedule[i].className,
+          decoration: textInputDecoration.copyWith(hintText: 'Class name'),
+          validator: (val) => val!.isEmpty ? 'Please enter a class name' : null,
+          onChanged: (val) => setState(() => _currentClassNames[i] = val),
+        ));
+        formWidgets.add(const SizedBox(height: 10.0));
+        formWidgets.add(TextFormField(
+          initialValue: schedule[i].classTeacher,
+          decoration: textInputDecoration.copyWith(hintText: 'Teacher name'),
+          validator: (val) =>
+              val!.isEmpty ? 'Please enter a teacher name' : null,
+          onChanged: (val) => setState(() {
+            _currentClassTeachers[i] = val;
+          }),
+        ));
+        formWidgets.add(const SizedBox(height: 10.0));
+        formWidgets.add(TextFormField(
+          initialValue: schedule[i].classRoom,
+          decoration: textInputDecoration.copyWith(hintText: 'Classroom'),
+          validator: (val) => val!.isEmpty ? 'Please enter a classroom' : null,
+          onChanged: (val) => setState(() => _currentClassRooms[i] = val),
+        ));
+        formWidgets.add(const SizedBox(height: 15.0));
+        if (i != 7) {
+          formWidgets.add(const Divider(color: Colors.white));
+        }
+        formWidgets.add(const SizedBox(height: 15.0));
+      }
+      formWidgets.add(const SizedBox(height: 30.0));
+      formWidgets.add(
+        RaisedButton(
+          color: Colors.red[900],
+          child: const Text(
+            'Update',
+            style: TextStyle(color: Colors.white),
+          ),
+          onPressed: () async {
+            if (_formKey.currentState!.validate()) {
+              List<ScheduleObject> schedule = [];
+              for (int i = 0; i < 8; i++) {
+                schedule.add(ScheduleObject(
+                    className: _currentClassNames[i],
+                    classTeacher: _currentClassTeachers[i],
+                    classRoom: _currentClassRooms[i],
+                    classPeriod: i.toString()));
+              }
+              await DatabaseService(uid: user.uid).updateUserData(schedule);
+              Navigator.pop(context);
+            }
+          },
+        ),
+      );
+      formWidgets.add(const SizedBox(height: 20.0));
+      return formWidgets;
     }
 
     if (scheduleItems.isNotEmpty) {
-      return Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            const Text(
-              'Update your schedule',
-              style: TextStyle(fontSize: 18.0),
+      return Scaffold(
+        backgroundColor: Colors.grey[900],
+        appBar: AppBar(
+          backgroundColor: Colors.red[900],
+          title: const Text(
+            'Centennial HS',
+            style: TextStyle(
+              color: Colors.white,
+              letterSpacing: 1.5,
             ),
-            const SizedBox(height: 20.0),
-            buildFormField(scheduleItems),
-            const SizedBox(height: 30.0),
-            RaisedButton(
-              color: Colors.red[900],
-              child: const Text(
-                'Update',
-                style: TextStyle(color: Colors.white),
+          ),
+          centerTitle: false,
+          elevation: 0.0,
+          leading: const Image(
+            image: AssetImage('assets/centennial-logo.png'),
+          ),
+          automaticallyImplyLeading: false,
+          actions: <Widget>[
+            FlatButton.icon(
+              icon: const Icon(
+                Icons.person,
+                color: Colors.white,
               ),
+              label: const Text('Logout',
+                  style: TextStyle(
+                    color: Colors.white,
+                  )),
               onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  List<ScheduleObject> schedule = [];
-                  for (int i = 0; i < 8; i++) {
-                    schedule.add(ScheduleObject(
-                        className: _currentClassNames![i],
-                        classTeacher: _currentClassTeachers![i],
-                        classRoom: _currentClassRooms![i],
-                        classPeriod: i.toString()));
-                  }
-                  await DatabaseService(uid: user.uid).updateUserData(schedule);
-                  Navigator.pop(context);
-                }
+                await _auth.signOut();
               },
             ),
           ],
+        ),
+        body: Form(
+          key: _formKey,
+          child: Align(
+            alignment: Alignment.center,
+            child: ListView(children: <Widget>[
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+                child: Column(children: formBuilder(scheduleItems)),
+              )
+            ]),
+          ),
         ),
       );
     } else {
