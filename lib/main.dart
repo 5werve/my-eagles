@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:my_eagles/pages/home/authenticate/authenticate.dart';
-import 'package:my_eagles/pages/home/navigation.dart';
 import 'package:my_eagles/pages/wrapper.dart';
 import 'package:my_eagles/services/auth.dart';
 import 'models/app_user.dart';
