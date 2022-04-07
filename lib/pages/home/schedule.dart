@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_eagles/models/schedule_object.dart';
 import 'package:my_eagles/models/app_user.dart';
-import 'package:my_eagles/pages/home/scheduleChange.dart';
+import 'package:my_eagles/pages/home/schedule_change.dart';
 import 'package:my_eagles/shared/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:my_eagles/services/database.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_eagles/pages/home/calendar.dart';
+import 'package:my_eagles/pages/home/report_bugs.dart';
 import 'package:my_eagles/pages/home/schedule.dart';
 import 'package:my_eagles/pages/home/activities.dart';
 import 'package:my_eagles/pages/home/contact.dart';
@@ -49,6 +50,16 @@ class _NavigationState extends State<Navigation> {
         ),
         automaticallyImplyLeading: false,
         actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.report_problem_outlined,
+              color: Colors.white,
+            ),
+            onPressed: () async {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ReportBugs()));
+            },
+          ),
           FlatButton.icon(
             icon: const Icon(
               Icons.person,

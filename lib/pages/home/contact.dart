@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_eagles/models/app_user.dart';
 import 'package:my_eagles/models/teacher.dart';
-import 'package:my_eagles/pages/home/emailForm.dart';
+import 'package:my_eagles/pages/home/email_form.dart';
 import 'package:my_eagles/services/database.dart';
 import 'package:my_eagles/shared/loading.dart';
 import 'package:provider/provider.dart';
