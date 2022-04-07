@@ -1,3 +1,5 @@
+// Form to report bugs (similar to form to email teachers)
+
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
@@ -14,9 +16,11 @@ class ReportBugs extends StatefulWidget {
 
 class _ReportBugsState extends State<ReportBugs> {
   final AuthService _auth = AuthService();
+  // Text field controller
   final controllerBugName = TextEditingController();
   final controllerDescription = TextEditingController();
 
+  // Similar to form to contact teachers
   Widget buildTextField({
     required String title,
     required TextEditingController controller,

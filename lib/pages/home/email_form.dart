@@ -1,4 +1,9 @@
+// Form to send email to teacher
+
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:my_eagles/pages/home/report_bugs.dart';
 import 'package:my_eagles/services/auth.dart';
 import 'package:my_eagles/shared/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,10 +17,12 @@ class EmailForm extends StatefulWidget {
 
 class _EmailFormState extends State<EmailForm> {
   final AuthService _auth = AuthService();
+  // Create text field controllers
   final controllerTo = TextEditingController();
   final controllerSubject = TextEditingController();
   final controllerMessage = TextEditingController();
 
+  // Function to create text field
   Widget buildTextField({
     required String title,
     required TextEditingController controller,
@@ -26,10 +33,10 @@ class _EmailFormState extends State<EmailForm> {
         children: [
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
           ),
-          SizedBox(height: 10.0),
+          const SizedBox(height: 10.0),
           TextField(
             controller: controller,
             maxLines: maxLines,
@@ -38,6 +45,7 @@ class _EmailFormState extends State<EmailForm> {
         ],
       );
 
+  // Function to open email client and fill in fields
   Future launchEmail({
     required String toEmail,
     required String subject,
@@ -70,6 +78,18 @@ class _EmailFormState extends State<EmailForm> {
           ),
           automaticallyImplyLeading: false,
           actions: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.report_problem_outlined,
+                color: Colors.white,
+              ),
+              onPressed: () async {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ReportBugs()));
+              },
+            ),
             FlatButton.icon(
               icon: const Icon(
                 Icons.person,
@@ -85,8 +105,9 @@ class _EmailFormState extends State<EmailForm> {
             ),
           ],
         ),
+        // Build email form
         body: SingleChildScrollView(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(children: [
               buildTextField(title: 'To', controller: controllerTo),
               const SizedBox(height: 16.0),
@@ -101,12 +122,12 @@ class _EmailFormState extends State<EmailForm> {
                         subject: controllerSubject.text,
                         message: controllerMessage.text,
                       ),
-                  child: Text('Send'),
+                  child: const Text('Send'),
                   style: ElevatedButton.styleFrom(
                       primary: Colors.red[900],
-                      minimumSize: Size.fromHeight(50.0),
+                      minimumSize: const Size.fromHeight(50.0),
                       textStyle:
-                          TextStyle(fontSize: 20.0, color: Colors.white)))
+                          const TextStyle(fontSize: 20.0, color: Colors.white)))
             ])));
   }
 }

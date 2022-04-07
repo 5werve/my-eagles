@@ -1,3 +1,7 @@
+// Navigation widget that wraps the app's main pages and toggles between them using the bottom navigation bar
+
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:my_eagles/pages/home/calendar.dart';
 import 'package:my_eagles/pages/home/report_bugs.dart';
@@ -9,11 +13,14 @@ import 'package:my_eagles/pages/home/home.dart';
 import '../../services/auth.dart';
 
 class Navigation extends StatefulWidget {
+  const Navigation({Key? key}) : super(key: key);
+
   @override
   _NavigationState createState() => _NavigationState();
 }
 
 class _NavigationState extends State<Navigation> {
+  // Variables for bottom navigation bar
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     Home(),
@@ -33,6 +40,7 @@ class _NavigationState extends State<Navigation> {
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
 
+    // Returns the navigation widget, which includes the app bar and the bottom navigation bar
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red[900],
@@ -50,6 +58,7 @@ class _NavigationState extends State<Navigation> {
         ),
         automaticallyImplyLeading: false,
         actions: <Widget>[
+          // Button to redirect to bug reporting form
           IconButton(
             icon: const Icon(
               Icons.report_problem_outlined,
@@ -57,9 +66,10 @@ class _NavigationState extends State<Navigation> {
             ),
             onPressed: () async {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ReportBugs()));
+                  MaterialPageRoute(builder: (context) => const ReportBugs()));
             },
           ),
+          // Button to logout
           FlatButton.icon(
             icon: const Icon(
               Icons.person,

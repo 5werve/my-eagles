@@ -1,6 +1,11 @@
+// Form to change user's schedule
+
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:my_eagles/models/app_user.dart';
 import 'package:my_eagles/models/schedule_object.dart';
+import 'package:my_eagles/pages/home/report_bugs.dart';
 import 'package:my_eagles/services/auth.dart';
 import 'package:my_eagles/services/database.dart';
 import 'package:my_eagles/shared/constants.dart';
@@ -18,17 +23,20 @@ class _ScheduleChangeFormState extends State<ScheduleChangeForm> {
   final _formKey = GlobalKey<FormState>();
   bool initialized = true;
 
-  // form values
-  List<String> _currentClassNames = [];
-  List<String> _currentClassTeachers = [];
-  List<String> _currentClassRooms = [];
+  // Form values
+  final List<String> _currentClassNames = [];
+  final List<String> _currentClassTeachers = [];
+  final List<String> _currentClassRooms = [];
 
   @override
   Widget build(BuildContext context) {
+    // Get object dependencies
     final user = Provider.of<AppUser>(context);
     final AuthService _auth = AuthService();
+    // Get schedule objects to pre-fill text fields
     final scheduleItems = Provider.of<List<ScheduleObject>>(context);
 
+    // Fill form values with initial values
     if (scheduleItems.isNotEmpty && initialized) {
       for (int i = 0; i < 8; i++) {
         _currentClassNames.add(scheduleItems[i].className);
@@ -38,6 +46,7 @@ class _ScheduleChangeFormState extends State<ScheduleChangeForm> {
       initialized = false;
     }
 
+    // Funciton to create form field for each class in the schedule
     List<Widget> formBuilder(List<ScheduleObject> schedule) {
       List<Widget> formWidgets = [];
       formWidgets.add(const SizedBox(height: 15.0));
@@ -50,7 +59,7 @@ class _ScheduleChangeFormState extends State<ScheduleChangeForm> {
       for (int i = 0; i < 8; i++) {
         formWidgets.add(Text(
           'Period $i',
-          style: TextStyle(fontSize: 13.0, color: Colors.white),
+          style: const TextStyle(fontSize: 13.0, color: Colors.white),
         ));
         formWidgets.add(const SizedBox(height: 15.0));
         formWidgets.add(TextFormField(
@@ -84,6 +93,7 @@ class _ScheduleChangeFormState extends State<ScheduleChangeForm> {
       }
       formWidgets.add(const SizedBox(height: 30.0));
       formWidgets.add(
+        // Button to validate form fields and update database
         RaisedButton(
           color: Colors.red[900],
           child: const Text(
@@ -111,6 +121,7 @@ class _ScheduleChangeFormState extends State<ScheduleChangeForm> {
     }
 
     if (scheduleItems.isNotEmpty) {
+      // Returns body of form
       return Scaffold(
         backgroundColor: Colors.grey[900],
         appBar: AppBar(
@@ -129,6 +140,18 @@ class _ScheduleChangeFormState extends State<ScheduleChangeForm> {
           ),
           automaticallyImplyLeading: false,
           actions: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.report_problem_outlined,
+                color: Colors.white,
+              ),
+              onPressed: () async {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ReportBugs()));
+              },
+            ),
             FlatButton.icon(
               icon: const Icon(
                 Icons.person,

@@ -1,9 +1,12 @@
+// Service related to user authentication (sign in, logout, register, login status)
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_eagles/models/app_user.dart';
 import 'package:my_eagles/models/schedule_object.dart';
 import 'package:my_eagles/services/database.dart';
 
 class AuthService {
+  // Create FirebaseAuth object to communicate with FireBase authentication service
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // create user obj based on Firebase's User obj
@@ -24,6 +27,7 @@ class AuthService {
       User? user = result.user;
       return _appUserFromFirebaseUser(user);
     } catch (e) {
+      // ignore: avoid_print
       print(e.toString());
       return null;
     }
@@ -50,6 +54,7 @@ class AuthService {
 
       return _appUserFromFirebaseUser(user);
     } catch (e) {
+      // ignore: avoid_print
       print(e.toString());
       return null;
     }
@@ -60,6 +65,7 @@ class AuthService {
     try {
       return await _auth.signOut();
     } catch (e) {
+      // ignore: avoid_print
       print(e.toString());
       return null;
     }

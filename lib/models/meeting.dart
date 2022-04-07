@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Model for meeting object to add to calendar
 class Meeting {
   String? eventName;
   DateTime? from;

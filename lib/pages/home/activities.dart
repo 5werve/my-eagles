@@ -1,3 +1,5 @@
+// Lists school extracurricular activities using a list of cards
+
 import 'package:flutter/material.dart';
 import 'package:my_eagles/models/activity_model.dart';
 
@@ -9,6 +11,7 @@ class Activities extends StatefulWidget {
 }
 
 class _ActivitiesState extends State<Activities> {
+  // Generate list of activities using ActivityModel model
   List<ActivityModel> activities = [
     ActivityModel(
         name: 'Key Club',
@@ -26,6 +29,7 @@ class _ActivitiesState extends State<Activities> {
 
   @override
   Widget build(BuildContext context) {
+    // Display each object in the activities list using a list view to generate cards for each activity
     return Scaffold(
       body: ListView(
         children: <Widget>[
@@ -42,7 +46,7 @@ class _ActivitiesState extends State<Activities> {
                     title: Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Text(activities[index].name,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold)),
                     ),

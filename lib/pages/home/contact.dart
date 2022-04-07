@@ -1,3 +1,5 @@
+// Displays teacher contact info with an option to redirect to an email form page
+
 import 'package:flutter/material.dart';
 import 'package:my_eagles/models/app_user.dart';
 import 'package:my_eagles/models/teacher.dart';
@@ -18,9 +20,11 @@ class _ContactState extends State<Contact> {
   Widget build(BuildContext context) {
     final user = Provider.of<AppUser>(context);
 
+    // Returns list of teachers and thir emails using a list view builder
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
       color: Colors.grey[900],
+      // Gets list of teachers from database
       child: StreamBuilder<List<Teacher>>(
           stream: DatabaseService(uid: user.uid).teacherEmails,
           builder: (context, snapshot) {
@@ -68,10 +72,13 @@ class _ContactState extends State<Contact> {
                   },
                 ),
                 backgroundColor: Colors.grey[900],
+                // Button to redirect user to email form
                 floatingActionButton: FloatingActionButton.extended(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => EmailForm()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const EmailForm()));
                   },
                   icon: const Icon(Icons.send),
                   label: const Text('Send Email'),

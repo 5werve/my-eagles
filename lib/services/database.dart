@@ -1,3 +1,5 @@
+// Service to get data from FireBase FireStore
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_eagles/models/schedule_object.dart';
 import 'package:my_eagles/models/teacher.dart';
@@ -6,12 +8,13 @@ class DatabaseService {
   final String uid;
   DatabaseService({required this.uid});
 
-  // collection reference
+  // Collection references
   final CollectionReference scheduleCollection =
       FirebaseFirestore.instance.collection('schedules');
   final CollectionReference emailCollection =
       FirebaseFirestore.instance.collection('teacher_emails');
 
+  // Function to update user's schedule
   Future updateUserData(List<ScheduleObject> classes) async {
     int index = 0;
     Map<String, String> schedule = {};

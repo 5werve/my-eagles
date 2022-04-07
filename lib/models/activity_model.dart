@@ -1,3 +1,4 @@
+// Model for school extracurriculars
 class ActivityModel {
   final String name;
   final String description;

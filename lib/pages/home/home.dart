@@ -1,11 +1,11 @@
+// Display homepage containing the date, day's events, bell schedule, and lunch menu
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:my_eagles/models/meeting.dart';
-import 'package:my_eagles/pages/home/calendar.dart';
 import 'package:my_eagles/shared/loading.dart';
-
 import 'event_tile.dart';
 
 class Home extends StatefulWidget {
@@ -16,6 +16,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // Getting event data from FireStore
   List<Meeting>? events;
   final calendarReference = FirebaseFirestore.instance;
 
@@ -53,28 +54,30 @@ class _HomeState extends State<Home> {
     if (events != null) {
       return Scaffold(
         body: ListView(
-          //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            // Display the day's date
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                padding: EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(15.0),
                 color: Colors.grey[800],
                 child: Text(
                     '${DateFormat('EEEE').format(DateTime.now())}, ${DateFormat('MMMM').format(DateTime.now())} ${DateFormat('d').format(DateTime.now())}',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold)),
               ),
             ),
+            // Display the day's events
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text("TODAY'S EVENTS",
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold)),
             ),
+            // Builds an event tile if the event falls on the day's date
             ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
@@ -90,12 +93,13 @@ class _HomeState extends State<Home> {
                 if (isBefore && isAfter) {
                   return EventTile(event: events![index]);
                 } else {
-                  return SizedBox(height: 0.0);
+                  return const SizedBox(height: 0.0);
                 }
               },
               itemCount: events!.length,
             ),
             const SizedBox(height: 16.0),
+            // Display bell schedule
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text("BELL SCHEDULE",
@@ -103,8 +107,9 @@ class _HomeState extends State<Home> {
                       color: Colors.white, fontWeight: FontWeight.bold)),
             ),
             Container(
-                margin: EdgeInsets.all(15.0),
+                margin: const EdgeInsets.all(15.0),
                 child: const Image(image: AssetImage('assets/schedule.png'))),
+            // Display the month's lunch menu
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text("LUNCH MENU",
@@ -112,7 +117,7 @@ class _HomeState extends State<Home> {
                       color: Colors.white, fontWeight: FontWeight.bold)),
             ),
             Container(
-                margin: EdgeInsets.all(15.0),
+                margin: const EdgeInsets.all(15.0),
                 child: const Image(image: AssetImage('assets/menu.png'))),
           ],
         ),

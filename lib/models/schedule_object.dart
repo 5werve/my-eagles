@@ -1,3 +1,4 @@
+// Model for a schedule object to list on the schedule page
 class ScheduleObject {
   late String className;
   late String classTeacher;

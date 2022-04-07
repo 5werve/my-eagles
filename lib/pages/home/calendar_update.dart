@@ -1,5 +1,10 @@
+// Form to add event to calendar
+
+// ignore_for_file: deprecated_member_use
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:my_eagles/pages/home/report_bugs.dart';
 import 'package:my_eagles/services/auth.dart';
 import 'package:my_eagles/shared/constants.dart';
 import 'package:intl/intl.dart';
@@ -12,11 +17,12 @@ class CalendarUpdate extends StatefulWidget {
 }
 
 class _CalendarUpdateState extends State<CalendarUpdate> {
+  // Getting objects of dependencies
   final _formKey = GlobalKey<FormState>();
   final calendarReference = FirebaseFirestore.instance;
   final AuthService _auth = AuthService();
 
-  // form values
+  // Form values
   String? _currentSubject;
   String? _currentStartDate;
   String? _currentEndDate;
@@ -41,6 +47,16 @@ class _CalendarUpdateState extends State<CalendarUpdate> {
         ),
         automaticallyImplyLeading: false,
         actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.report_problem_outlined,
+              color: Colors.white,
+            ),
+            onPressed: () async {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const ReportBugs()));
+            },
+          ),
           FlatButton.icon(
             icon: const Icon(
               Icons.person,
@@ -56,6 +72,7 @@ class _CalendarUpdateState extends State<CalendarUpdate> {
           ),
         ],
       ),
+      // Return form to add event
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
         child: Form(
@@ -70,7 +87,7 @@ class _CalendarUpdateState extends State<CalendarUpdate> {
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               TextFormField(
                 decoration:
                     textInputDecoration.copyWith(hintText: 'Event name'),
@@ -78,25 +95,28 @@ class _CalendarUpdateState extends State<CalendarUpdate> {
                     val!.isEmpty ? 'Please enter an event name' : null,
                 onChanged: (val) => setState(() => _currentSubject = val),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               TextFormField(
                 decoration: textInputDecoration.copyWith(
                     hintText: "Start date (format 'dd/MM/yyyy HH:mm:ss')"),
+                // Ensure date entered in correct format
                 validator: (val) {
                   try {
                     DateFormat('dd/MM/yyyy HH:mm:ss').parse(val ?? '');
                     return null;
+                    // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
                   } catch (FormatException) {
                     return "Please enter a date with the format 'dd/MM/yyyy HH:mm:ss'";
                   }
                 },
                 onChanged: (val) => setState(() => _currentStartDate = val),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               TextFormField(
                 decoration: textInputDecoration.copyWith(
                     hintText: "End date (format 'dd/MM/yyyy HH:mm:ss')"),
                 validator: (val) {
+                  // Ensure end date is after the start date of the event
                   try {
                     DateFormat('dd/MM/yyyy HH:mm:ss').parse(val ?? '');
                     if (DateFormat('dd/MM/yyyy HH:mm:ss')
@@ -107,13 +127,15 @@ class _CalendarUpdateState extends State<CalendarUpdate> {
                     } else {
                       return null;
                     }
+                    // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
                   } catch (FormatException) {
                     return "Please enter a date with the format 'dd/MM/yyyy HH:mm:ss'";
                   }
                 },
                 onChanged: (val) => setState(() => _currentEndDate = val),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
+              // Button to validate form fields and add event to database
               RaisedButton(
                 color: Colors.red[900],
                 child: const Text(
@@ -130,7 +152,7 @@ class _CalendarUpdateState extends State<CalendarUpdate> {
                       'StartTime': '$_currentStartDate',
                       'EndTime': '$_currentEndDate'
                     });
-                    ;
+
                     Navigator.pop(context);
                   }
                 },
@@ -140,6 +162,5 @@ class _CalendarUpdateState extends State<CalendarUpdate> {
         ),
       ),
     );
-    ;
   }
 }

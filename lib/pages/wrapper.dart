@@ -1,3 +1,5 @@
+// Returns authenticate or navigation widget based on login status of user
+
 import 'package:flutter/material.dart';
 import 'package:my_eagles/pages/home/authenticate/authenticate.dart';
 import 'package:my_eagles/pages/home/navigation.dart';
@@ -9,13 +11,14 @@ class Wrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Getting user object from stream
     final user = Provider.of<AppUser?>(context);
 
-    // return either Home or Authenticate widget
+    // Return either Home or Authenticate widget depending on login status
     if (user == null) {
-      return Authenticate();
+      return const Authenticate();
     } else {
-      return Navigation();
+      return const Navigation();
     }
   }
 }

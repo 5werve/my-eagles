@@ -1,30 +1,40 @@
+// Form to login user
+
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:my_eagles/services/auth.dart';
 import 'package:my_eagles/shared/constants.dart';
 import 'package:my_eagles/shared/loading.dart';
 
 class SignIn extends StatefulWidget {
+  // Passing function to toggle between sign in and register
   final Function toggleView;
-  SignIn({required this.toggleView});
+  // ignore: use_key_in_widget_constructors
+  const SignIn({required this.toggleView});
 
   @override
   State<SignIn> createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
+  // Getting authentication service object
   final AuthService _auth = AuthService();
+  // Getting form key
   final _formKey = GlobalKey<FormState>();
+  // Variable to set loading status
   bool loading = false;
 
-  // text field state
+  // Text field states
   String email = '';
   String password = '';
   String error = '';
 
   @override
   Widget build(BuildContext context) {
+    // Show loading or the form based on value of loading
     return loading
-        ? Loading()
+        ? const Loading()
         : Scaffold(
             backgroundColor: Colors.grey[900],
             appBar: AppBar(
@@ -43,6 +53,7 @@ class _SignInState extends State<SignIn> {
                 ),
                 automaticallyImplyLeading: false,
                 actions: <Widget>[
+                  // Button to toggle between sign in and register
                   FlatButton.icon(
                     icon: const Icon(
                       Icons.person,
@@ -58,11 +69,14 @@ class _SignInState extends State<SignIn> {
                   ),
                 ]),
             body: Container(
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+              // Form widget
               child: Form(
                 key: _formKey,
                 child: Column(children: <Widget>[
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
+                  // Text field for email
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Email'),
                     validator: (val) => val!.isEmpty ? 'Enter an email' : null,
@@ -70,11 +84,13 @@ class _SignInState extends State<SignIn> {
                       setState(() => email = val);
                     },
                   ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
+                  // Text field for password
                   TextFormField(
                     decoration:
                         textInputDecoration.copyWith(hintText: 'Password'),
                     obscureText: true,
+                    // Code to check if password is greater than 6 characters long
                     validator: (val) => val!.length < 6
                         ? 'Enter a password 6+ chars long'
                         : null,
@@ -82,7 +98,8 @@ class _SignInState extends State<SignIn> {
                       setState(() => password = val);
                     },
                   ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
+                  // Button to validate form fields and login user
                   RaisedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
@@ -98,13 +115,13 @@ class _SignInState extends State<SignIn> {
                       }
                     },
                     color: Colors.red[900],
-                    child:
-                        Text('Sign In', style: TextStyle(color: Colors.white)),
+                    child: const Text('Sign In',
+                        style: TextStyle(color: Colors.white)),
                   ),
-                  SizedBox(height: 12.0),
+                  const SizedBox(height: 12.0),
                   Text(
                     error,
-                    style: TextStyle(color: Colors.red, fontSize: 14.0),
+                    style: const TextStyle(color: Colors.red, fontSize: 14.0),
                   ),
                 ]),
               ),

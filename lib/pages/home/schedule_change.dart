@@ -1,9 +1,10 @@
+// Wrapper widget to pass ScheduleObject stream to the update schedule form
+
 import 'package:flutter/material.dart';
 import 'package:my_eagles/models/app_user.dart';
 import 'package:my_eagles/models/schedule_object.dart';
 import 'package:my_eagles/pages/home/schedule_change_form.dart';
 import 'package:my_eagles/services/database.dart';
-import 'package:my_eagles/shared/constants.dart';
 import 'package:provider/provider.dart';
 
 class ScheduleChange extends StatefulWidget {
@@ -20,7 +21,7 @@ class _ScheduleChangeState extends State<ScheduleChange> {
 
     return StreamProvider<List<ScheduleObject>>.value(
         value: DatabaseService(uid: user.uid).userSchedule,
-        initialData: [],
-        child: ScheduleChangeForm());
+        initialData: const [],
+        child: const ScheduleChangeForm());
   }
 }

@@ -1,11 +1,17 @@
+// Form to register new user
+
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:my_eagles/shared/constants.dart';
 import 'package:my_eagles/shared/loading.dart';
 import 'package:my_eagles/services/auth.dart';
 
+// Refer to comments for sign in page; this file is very similar to the former
 class Register extends StatefulWidget {
   final Function toggleView;
-  Register({required this.toggleView});
+  // ignore: use_key_in_widget_constructors
+  const Register({required this.toggleView});
 
   @override
   State<Register> createState() => _RegisterState();
@@ -16,7 +22,7 @@ class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
 
-  // text field state
+  // Text field states
   String email = '';
   String password = '';
   String error = '';
@@ -24,7 +30,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? Loading()
+        ? const Loading()
         : Scaffold(
             backgroundColor: Colors.grey[900],
             appBar: AppBar(
@@ -58,11 +64,12 @@ class _RegisterState extends State<Register> {
                   ),
                 ]),
             body: Container(
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
               child: Form(
                 key: _formKey,
                 child: Column(children: <Widget>[
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Email'),
                     validator: (val) => val!.isEmpty ? 'Enter an email' : null,
@@ -70,7 +77,7 @@ class _RegisterState extends State<Register> {
                       setState(() => email = val);
                     },
                   ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   TextFormField(
                     decoration:
                         textInputDecoration.copyWith(hintText: 'Password'),
@@ -82,7 +89,7 @@ class _RegisterState extends State<Register> {
                       setState(() => password = val);
                     },
                   ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   RaisedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
@@ -98,13 +105,13 @@ class _RegisterState extends State<Register> {
                       }
                     },
                     color: Colors.red[900],
-                    child:
-                        Text('Register', style: TextStyle(color: Colors.white)),
+                    child: const Text('Register',
+                        style: TextStyle(color: Colors.white)),
                   ),
-                  SizedBox(height: 12.0),
+                  const SizedBox(height: 12.0),
                   Text(
                     error,
-                    style: TextStyle(color: Colors.red, fontSize: 14.0),
+                    style: const TextStyle(color: Colors.red, fontSize: 14.0),
                   ),
                 ]),
               ),
