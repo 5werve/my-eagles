@@ -58,3 +58,9 @@ Images used:
 - App icon: https://www.google.com/url?sa=i&url=https%3A%2F%2Fchs.hcpss.org%2F&psig=AOvVaw1f6r2NjGsbdYvEoBMpKEzW&ust=1649453592749000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCIi5rs7zgvcCFQAAAAAdAAAAABAD
 - Lunch menu: https://www.csd28j.org//cms/lib/OR50000628/Centricity/Domain/57/APRIL%202022%20.docx.pdf
 - Bell schedule: https://www.csd28j.org//cms/lib/OR50000628/Centricity/Domain/464/Monday%20Tuesday%20Friday.pdf
+
+Software used:
+
+- Flutter: https://flutter.dev/?gclid=Cj0KCQjwl7qSBhD-ARIsACvV1X0JyrjnADF7Qz9yQZXJtCQ_LCDjXooYqkLsdq7T6pl5MySC0T7EuycaAnjWEALw_wcB&gclsrc=aw.ds
+- Dart: https://dart.dev/
+- Android: https://www.apache.org/licenses/LICENSE-2.0
