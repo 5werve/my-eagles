@@ -50,3 +50,11 @@ The following links are for Flutter packages used in the application:
 Contact:
 
 Email: vuminhmatthew@gmail.com
+
+Copyright Info:
+
+Images used:
+
+- App icon: https://www.google.com/url?sa=i&url=https%3A%2F%2Fchs.hcpss.org%2F&psig=AOvVaw1f6r2NjGsbdYvEoBMpKEzW&ust=1649453592749000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCIi5rs7zgvcCFQAAAAAdAAAAABAD
+- Lunch menu: https://www.csd28j.org//cms/lib/OR50000628/Centricity/Domain/57/APRIL%202022%20.docx.pdf
+- Bell schedule: https://www.csd28j.org//cms/lib/OR50000628/Centricity/Domain/464/Monday%20Tuesday%20Friday.pdf
